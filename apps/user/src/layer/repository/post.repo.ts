@@ -9,6 +9,24 @@ export type RetrievePostList = Array<
 >;
 
 class _select {
+  public static ids(tx: UserPrisma.TransactionClient, category: PostCategoryEnum, pageSize = 2000) {
+    return tx.postBase.findMany({
+      take: pageSize,
+      orderBy: {
+        createdAt: "desc",
+      },
+      select: {
+        id: true,
+      },
+      where: {
+        isDeleted: false,
+        postMeta: {
+          category,
+        },
+      },
+    });
+  }
+
   public static liveCount(tx: UserPrisma.TransactionClient, category: PostCategoryEnum) {
     return tx.postBase.aggregate({
       _count: true,

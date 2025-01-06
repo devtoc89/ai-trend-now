@@ -20,6 +20,7 @@ type MenuItem = {
   | {
       disabled?: false;
       href: string;
+      isCrossOrigin?: boolean;
     }
   | {
       disabled: true;
@@ -43,24 +44,24 @@ const menuGroups: MenuGroup[] = [
         label: "Paper",
         href: "/post/paper/page/1",
       },
-      {
-        id: "postColumn",
-        label: "Column",
-        disabled: true,
-      },
+      // {
+      //   id: "postColumn",
+      //   label: "Column",
+      //   disabled: true,
+      // },
     ],
   },
-  {
-    id: "content",
-    label: "Content",
-    items: [
-      {
-        id: "contentCommunity",
-        label: "Community",
-        disabled: true,
-      },
-    ],
-  },
+  // {
+  //   id: "content",
+  //   label: "Content",
+  //   items: [
+  //     {
+  //       id: "contentCommunity",
+  //       label: "Community",
+  //       disabled: true,
+  //     },
+  //   ],
+  // },
   {
     id: "aboutService",
     label: "About Service",
@@ -68,7 +69,9 @@ const menuGroups: MenuGroup[] = [
       {
         id: "developerProfile",
         label: "Developer Profile",
-        disabled: true,
+        isCrossOrigin: true,
+        href: "https://github.com/devtoc89",
+        // disabled: true,
       },
     ],
   },
@@ -91,9 +94,17 @@ function InnerMenuItem({ item }: { item: MenuItem }) {
   return (
     <MenubarItem disabled={item.disabled}>
       {!item.disabled && item.href ? (
-        <Link href={item.href} className="w-full">
-          {item.label}
-        </Link>
+        <>
+          {item.isCrossOrigin ? (
+            <a href={item.href} className="w-full" target="_blank" rel="noreferrer">
+              {item.label}
+            </a>
+          ) : (
+            <Link href={item.href} className="w-full">
+              {item.label}
+            </Link>
+          )}
+        </>
       ) : (
         item.label
       )}

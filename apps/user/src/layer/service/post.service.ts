@@ -1,11 +1,11 @@
 "use server";
 
-import PostRepository from "#layer/repository/post.repo";
-import { serviceWrapper } from "#lib/helper/service/service.helper";
-import { getPrismaClient } from "#lib/instance/prisma/prisma.instance";
 import type { PostBase, PostDetail, PostMeta } from "@prisma/client/user/index.js";
 import type { ResponseTypeDTO } from "@repo/types/dto/response/response.dto";
 import type { PostCategoryEnum } from "@repo/types/enums/post.category.enum";
+import PostRepository from "#layer/repository/post.repo";
+import { serviceWrapper } from "#lib/helper/service/service.helper";
+import { getPrismaClient } from "#lib/instance/prisma/prisma.instance";
 
 export type RetrievePostItem = Pick<PostBase, "id" | "createdAt"> & {
   postMeta: Pick<PostMeta, "metadata"> | null;
@@ -37,5 +37,14 @@ export async function retrievePostTotalCount({
   const prisma = getPrismaClient();
   return await serviceWrapper(retrievePostTotalCount.name, async () => {
     return (await PostRepository.select.liveCount(prisma, category))._count;
+  });
+}
+
+export async function retrievePostIdList({
+  category,
+}: { category: PostCategoryEnum }): Promise<ResponseTypeDTO<string[]>> {
+  const prisma = getPrismaClient();
+  return await serviceWrapper(retrievePostIdList.name, async () => {
+    return (await PostRepository.select.ids(prisma, category)).map((v) => v.id);
   });
 }

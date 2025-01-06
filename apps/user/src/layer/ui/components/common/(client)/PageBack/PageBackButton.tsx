@@ -8,7 +8,11 @@ import { useCallback } from "react";
 function PageBackButton({ variant = "default" }: { variant?: "ghost" | "outline" | "default" }) {
   const router = useRouter();
   const handleOnClick = useCallback(() => {
-    router.back();
+    if (history?.length === 1) {
+      router.push("/");
+    } else {
+      router.back();
+    }
   }, [router]);
   return (
     <Button onClick={handleOnClick} variant={variant}>

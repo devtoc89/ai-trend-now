@@ -1,14 +1,15 @@
 "use server";
 
+import type { PostCategoryEnum } from "@repo/types/enums/post.category.enum";
+import type { AiContentExt, AiContentMeta } from "@repo/types/model/ai.model";
+import { unstable_cache } from "next/cache";
 import {
   type RetrievePostItem,
+  retrievePostIdList,
   retrievePostItem,
   retrievePostList,
   retrievePostTotalCount,
 } from "#layer/service/post.service";
-import type { PostCategoryEnum } from "@repo/types/enums/post.category.enum";
-import type { AiContentExt, AiContentMeta } from "@repo/types/model/ai.model";
-import { unstable_cache } from "next/cache";
 
 export type PostListViewList = Omit<AiContentExt, "isError" | "content" | "metadata"> & {
   id: string;
@@ -77,6 +78,14 @@ export async function getPostTotalCountAction({ category }: { category: PostCate
 
   return contRes.data;
 }
+export async function getPostIdsAction({ category }: { category: PostCategoryEnum }): Promise<string[]> {
+  const contRes = await retrievePostIdList({ category });
+  if (!contRes.success) {
+    return [];
+  }
+
+  return contRes.data;
+}
 
 export const getPostListActionCache = async (category: PostCategoryEnum, page: number, pageSize: number) => {
   const { list } = await getPostListAndCountActionCache(category, page, pageSize);
@@ -95,7 +104,7 @@ export const getPostListAndCountActionCache = unstable_cache(
   }),
   [`${getPostListAction.name}_${getPostTotalCountAction.name}`],
   {
-    revalidate: 60,
+    revalidate: 120,
   },
 );
 
@@ -103,6 +112,14 @@ export const getPostItemActionCache = unstable_cache(
   async (id) => await getPostItemAction({ id }),
   [getPostItemAction.name],
   {
-    revalidate: 60,
+    revalidate: 3600,
+  },
+);
+
+export const getPostIdsActionCache = unstable_cache(
+  async (category) => await getPostIdsAction({ category }),
+  [getPostIdsAction.name],
+  {
+    revalidate: 3600,
   },
 );
