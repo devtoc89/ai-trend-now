@@ -5,6 +5,8 @@ on:
     branches:
       - user/deploy  # main 브랜치에 푸시할 때 트리거
 
+## TODO: 동시성 처리로 10초정도 배포 처리 개선이 가능해 보이므로 도입 검토
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
