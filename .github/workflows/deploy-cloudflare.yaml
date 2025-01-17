@@ -61,16 +61,20 @@ jobs:
       # 5. .env 파일 생성
       - name: Create .env file
         run: |
-          echo "USER_DATABASE_URL=${{ secrets.USER_DATABASE_URL }}" >> .env
-          echo "USER_PULSE_API_KEY=${{ secrets.USER_PULSE_API_KEY }}" >> .env
+          echo "USER_DATABASE_URL = \"${{ secrets.USER_DATABASE_URL }}\"" >> .env
+          echo "USER_PULSE_API_KEY = \"${{ secrets.USER_PULSE_API_KEY }}\"" >> .env
         shell: bash
         
       # 5. .env 파일 생성
       - name: add toml file
         run: |
           echo "" >> ./apps/user/wrangler.toml
+          echo "[vars]" >> ./apps/user/wrangler.toml
+          cat .env >> ./apps/user/wrangler.toml
+          echo "" >> ./apps/user/wrangler.toml
           echo "[env.production.vars]" >> ./apps/user/wrangler.toml
           cat .env >> ./apps/user/wrangler.toml
+          cat "NODE_ENV = \"production\"" >> ./apps/user/wrangler.toml
         shell: bash
         
       # 6. 프리 빌드
@@ -87,14 +91,14 @@ jobs:
         uses: actions/cache/save@v4
         with:
           path: ./apps/user/.next
-          key: next-${{ runner.os }} }}
+          key: next-${{ runner.os }}
           
       - name: Save vercel cache
         id: cache-vercel-save
         uses: actions/cache/save@v4
         with:
           path: ./apps/user/.vercel
-          key: vercel-${{ runner.os }} }}
+          key: vercel-${{ runner.os }}
       # # 8. wrangler 설치치
       # - name: add wrangler
       #   run: pnpm add wrangler@latest -w
