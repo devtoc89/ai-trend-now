@@ -28,7 +28,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ./apps/user/.next
-          key: next-${{ runner.os }} }}
+          key: next-${{ runner.os }}
           
       # test / remain .vercel cache
       - name: .vercel cache
@@ -36,7 +36,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ./apps/user/.vercel
-          key: vercel-${{ runner.os }} }}
+          key: vercel-${{ runner.os }}
 
       # 3. pnpm 설치
       - name: Setup pnpm
@@ -99,9 +99,6 @@ jobs:
         with:
           path: ./apps/user/.vercel
           key: vercel-${{ runner.os }}
-      # # 8. wrangler 설치치
-      # - name: add wrangler
-      #   run: pnpm add wrangler@latest -w
         
       # 9. cloudflare pages에 배포
       - name: Deploy to Cloudflare Pages
@@ -116,7 +113,7 @@ jobs:
           #   USER_DATABASE_URL
           #   USER_PULSE_API_KEY
           workingDirectory: ./apps/user/  # 빌드된 정적 파일이 저장된 디렉토리
-          command: pages deploy -branch production
+          command: pages deploy
         # env:
         #   NODE_ENV: production
         #   USER_DATABASE_URL: ${{ secrets.USER_DATABASE_URL }}
