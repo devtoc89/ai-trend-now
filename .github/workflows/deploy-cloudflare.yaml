@@ -24,7 +24,7 @@ jobs:
           key: pnpm-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
 
       # 2.2 next
-      - name: .next cache
+      - name: Restore next cache
         id: cache-next-restore
         uses: actions/cache@v4
         with:
@@ -32,7 +32,7 @@ jobs:
           key: next-${{ runner.os }}
           
       # 2.3 vercel
-      - name: .vercel cache
+      - name: Restore vercel cache
         id: cache-vercel-restore
         uses: actions/cache@v4
         with:
@@ -64,11 +64,11 @@ jobs:
           echo "" >> ./apps/user/wrangler.toml
           echo "[vars]" >> ./apps/user/wrangler.toml
           cat .env >> ./apps/user/wrangler.toml
-          echo "" >> ./apps/user/wrangler.toml
-          echo "[env.production.vars]" >> ./apps/user/wrangler.toml
-          cat .env >> ./apps/user/wrangler.toml
           echo "NODE_ENV = \"production\"" >> ./apps/user/wrangler.toml
         shell: bash
+          # echo "" >> ./apps/user/wrangler.toml
+          # echo "[env.production.vars]" >> ./apps/user/wrangler.toml
+          # cat .env >> ./apps/user/wrangler.toml
         
       # 6. 프리 빌드
       - name: prebuild project
@@ -112,7 +112,7 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           packageManager: "pnpm" # change npm to yarn or pnpm
-          environment: production
+          # environment: production
           # secrets: |
           #   NODE_ENV
           #   USER_DATABASE_URL
