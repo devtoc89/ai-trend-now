@@ -28,7 +28,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ./apps/user/.next
-          key: pnpm-${{ runner.os }}-${{ hashFiles('./apps/user/.next/BUILD_ID') }}
+          key: next-${{ runner.os }} }}
           
       # test / remain .vercel cache
       - name: .vercel cache
@@ -36,7 +36,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ./apps/user/.vercel
-          key: pnpm-${{ runner.os }}-${{ hashFiles('./apps/user/.vercel/output/builds.json') }}
+          key: vercel-${{ runner.os }} }}
 
       # 3. pnpm 설치
       - name: Setup pnpm
@@ -68,9 +68,9 @@ jobs:
       # 5. .env 파일 생성
       - name: add toml file
         run: |
-          echo "" >> wrangler.toml
-          echo "[env.production.vars]" >> wrangler.toml
-          cat .env >> wrangler.toml
+          echo "" >> ./apps/userwrangler.toml
+          echo "[env.production.vars]" >> ./apps/userwrangler.toml
+          cat .env >> ./apps/userwrangler.toml
         shell: bash
         
       # 6. 프리 빌드
@@ -87,14 +87,14 @@ jobs:
         uses: actions/cache/save@v4
         with:
           path: ./apps/user/.next
-          key: pnpm-${{ runner.os }}-${{ hashFiles('./apps/user/.next/BUILD_ID') }}
+          key: next-${{ runner.os }} }}
           
       - name: Save vercel cache
         id: cache-vercel-save
         uses: actions/cache/save@v4
         with:
           path: ./apps/user/.vercel
-          key: pnpm-${{ runner.os }}-${{ hashFiles('./apps/user/.vercel/output/builds.json') }}
+          key: vercel-${{ runner.os }} }}
       # # 8. wrangler 설치치
       # - name: add wrangler
       #   run: pnpm add wrangler@latest -w
