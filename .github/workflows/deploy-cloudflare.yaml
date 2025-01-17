@@ -56,20 +56,7 @@ jobs:
           path: |
             ~/.pnpm-store
           key: pnpm-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
-          
-      - name: Save next cache
-        id: cache-next-save
-        uses: actions/cache/save@v4
-        with:
-          path: ./apps/user/.next
-          key: pnpm-${{ runner.os }}-${{ hashFiles('./apps/user/.next/BUILD_ID') }}
-          
-      - name: Save vercel cache
-        id: cache-vercel-save
-        uses: actions/cache/save@v4
-        with:
-          path: ./apps/user/.vercel
-          key: pnpm-${{ runner.os }}-${{ hashFiles('./apps/user/.vercel/output/builds.json') }}
+
 
       # 5. .env 파일 생성
       - name: Create .env file
@@ -85,7 +72,21 @@ jobs:
       # 7. 빌드
       - name: build project
         run: NODE_ENV=production pnpm -filter user pages:build  # Pages에 배포할 정적 파일 생성
-        
+
+          
+      - name: Save next cache
+        id: cache-next-save
+        uses: actions/cache/save@v4
+        with:
+          path: ./apps/user/.next
+          key: pnpm-${{ runner.os }}-${{ hashFiles('./apps/user/.next/BUILD_ID') }}
+          
+      - name: Save vercel cache
+        id: cache-vercel-save
+        uses: actions/cache/save@v4
+        with:
+          path: ./apps/user/.vercel
+          key: pnpm-${{ runner.os }}-${{ hashFiles('./apps/user/.vercel/output/builds.json') }}
       # # 8. wrangler 설치치
       # - name: add wrangler
       #   run: pnpm add wrangler@latest -w
@@ -97,11 +98,11 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           packageManager: "pnpm" # change npm to yarn or pnpm
-          environment: production
-          secrets: |
-            NODE_ENV
-            USER_DATABASE_URL
-            USER_PULSE_API_KEY
+          # environment: production
+          # secrets: |
+          #   NODE_ENV
+          #   USER_DATABASE_URL
+          #   USER_PULSE_API_KEY
           workingDirectory: ./apps/user/  # 빌드된 정적 파일이 저장된 디렉토리
           command: pages deploy -branch production
         env:
