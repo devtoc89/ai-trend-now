@@ -65,6 +65,14 @@ jobs:
           echo "USER_PULSE_API_KEY=${{ secrets.USER_PULSE_API_KEY }}" >> .env
         shell: bash
         
+      # 5. .env 파일 생성
+      - name: add toml file
+        run: |
+          echo "" >> wrangler.toml
+          echo "[env.production.vars]" >> wrangler.toml
+          cat .env >> wrangler.toml
+        shell: bash
+        
       # 6. 프리 빌드
       - name: prebuild project
         run: pnpm prebuild  # Pages에 배포할 정적 파일 생성
@@ -98,14 +106,14 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           packageManager: "pnpm" # change npm to yarn or pnpm
-          # environment: production
+          environment: production
           # secrets: |
           #   NODE_ENV
           #   USER_DATABASE_URL
           #   USER_PULSE_API_KEY
           workingDirectory: ./apps/user/  # 빌드된 정적 파일이 저장된 디렉토리
           command: pages deploy -branch production
-        env:
-          NODE_ENV: production
-          USER_DATABASE_URL: ${{ secrets.USER_DATABASE_URL }}
-          USER_PULSE_API_KEY: ${{ secrets.USER_PULSE_API_KEY }}
+        # env:
+        #   NODE_ENV: production
+        #   USER_DATABASE_URL: ${{ secrets.USER_DATABASE_URL }}
+        #   USER_PULSE_API_KEY: ${{ secrets.USER_PULSE_API_KEY }}
