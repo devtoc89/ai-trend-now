@@ -14,7 +14,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         
-      # 2. pnpm 캐시 복원
+      # 2. 캐시 복원
+      # 2.1 pnpm
       - name: Restore pnpm cache
         id: cache-pnpm-restore
         uses: actions/cache@v4
@@ -22,7 +23,7 @@ jobs:
           path: ~/.pnpm-store
           key: pnpm-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
 
-      # test / remain .next cache
+      # 2.2 next
       - name: .next cache
         id: cache-next-restore
         uses: actions/cache@v4
@@ -30,7 +31,7 @@ jobs:
           path: ./apps/user/.next
           key: next-${{ runner.os }}
           
-      # test / remain .vercel cache
+      # 2.3 vercel
       - name: .vercel cache
         id: cache-vercel-restore
         uses: actions/cache@v4
@@ -48,24 +49,16 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      # 4. 의존성 캐싱
-      - name: Save pnpm cache
-        id: cache-pnpm-save
-        uses: actions/cache/save@v4
-        with:
-          path: |
-            ~/.pnpm-store
-          key: pnpm-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
 
 
-      # 5. .env 파일 생성
+      # 5.1. .env 파일 생성
       - name: Create .env file
         run: |
           echo "USER_DATABASE_URL = \"${{ secrets.USER_DATABASE_URL }}\"" >> .env
           echo "USER_PULSE_API_KEY = \"${{ secrets.USER_PULSE_API_KEY }}\"" >> .env
         shell: bash
         
-      # 5. .env 파일 생성
+      # 5.2. .toml 파일 생성
       - name: add toml file
         run: |
           echo "" >> ./apps/user/wrangler.toml
@@ -85,7 +78,18 @@ jobs:
       - name: build project
         run: NODE_ENV=production pnpm -filter user pages:build  # Pages에 배포할 정적 파일 생성
 
+
+      # 8. 캐싱
+      # 8.1 pnpm
+      - name: Save pnpm cache
+        id: cache-pnpm-save
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            ~/.pnpm-store
+          key: pnpm-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
           
+      # 8.2 next
       - name: Save next cache
         id: cache-next-save
         uses: actions/cache/save@v4
@@ -93,6 +97,7 @@ jobs:
           path: ./apps/user/.next
           key: next-${{ runner.os }}
           
+      # 8.2 vercel
       - name: Save vercel cache
         id: cache-vercel-save
         uses: actions/cache/save@v4
