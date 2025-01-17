@@ -22,17 +22,33 @@ jobs:
           path: ~/.pnpm-store
           key: pnpm-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
 
+      # test / remain .next cache
+      - name: .next cache
+        id: cache-next-restore
+        uses: actions/cache@v4
+        with:
+          path: ./apps/user/.next
+          key: pnpm-${{ runner.os }}-${{ hashFiles('./apps/user/.next/BUILD_ID') }}
+          
+      # test / remain .vercel cache
+      - name: .vercel cache
+        id: cache-vercel-restore
+        uses: actions/cache@v4
+        with:
+          path: ./apps/user/.vercel
+          key: pnpm-${{ runner.os }}-${{ hashFiles('./apps/user/.vercel/output/builds.json') }}
 
       # 3. pnpm 설치
       - name: Setup pnpm
         run: |
-          npm install -g pnpm@9.15.2
+          npm install -g pnpm@9.15.4
           pnpm config set store-dir ~/.pnpm-store
           
       # 4. 의존성 설치
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      # 4. 의존성 캐싱
       - name: Save pnpm cache
         id: cache-pnpm-save
         uses: actions/cache/save@v4
@@ -40,6 +56,20 @@ jobs:
           path: |
             ~/.pnpm-store
           key: pnpm-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+          
+      - name: Save next cache
+        id: cache-next-save
+        uses: actions/cache/save@v4
+        with:
+          path: ./apps/user/.next
+          key: pnpm-${{ runner.os }}-${{ hashFiles('./apps/user/.next/BUILD_ID') }}
+          
+      - name: Save vercel cache
+        id: cache-vercel-save
+        uses: actions/cache/save@v4
+        with:
+          path: ./apps/user/.vercel
+          key: pnpm-${{ runner.os }}-${{ hashFiles('./apps/user/.vercel/output/builds.json') }}
 
       # 5. .env 파일 생성
       - name: Create .env file
@@ -67,14 +97,14 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           packageManager: "pnpm" # change npm to yarn or pnpm
-          # environment: production
-          # secrets: |
-          #   NODE_ENV
-          #   USER_DATABASE_URL
-          #   USER_PULSE_API_KEY
+          environment: production
+          secrets: |
+            NODE_ENV
+            USER_DATABASE_URL
+            USER_PULSE_API_KEY
           workingDirectory: ./apps/user/  # 빌드된 정적 파일이 저장된 디렉토리
-          command: pages deploy -e production
-        # env:
-          # NODE_ENV: production
-          # USER_DATABASE_URL: ${{ secrets.USER_DATABASE_URL }}
-          # USER_PULSE_API_KEY: ${{ secrets.USER_PULSE_API_KEY }}
+          command: pages deploy -branch production
+        env:
+          NODE_ENV: production
+          USER_DATABASE_URL: ${{ secrets.USER_DATABASE_URL }}
+          USER_PULSE_API_KEY: ${{ secrets.USER_PULSE_API_KEY }}
