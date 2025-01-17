@@ -1,11 +1,11 @@
-import { PostCategoryEnum } from "@repo/types/enums/post.category.enum";
-import type { Metadata } from "next";
 import { NEWS_PAGE_SIZE, PAPER_ROOT_URL } from "#consts/global";
 import { getPostListAndCountActionCache } from "#layer/action/post.action";
 import PostListPage from "#layer/ui/pages/PostListPage/(server)/PostListPage";
 import { generatePagePostListMetadata } from "#lib/helper/metadata/metadata.helper";
+import { PostCategoryEnum } from "@repo/types/enums/post.category.enum";
+import type { Metadata } from "next";
 
-export const revalidate = 120;
+export const revalidate = 180;
 export const runtime = "edge";
 
 async function page() {
