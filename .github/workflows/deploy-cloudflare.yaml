@@ -74,7 +74,7 @@ jobs:
           echo "" >> ./apps/user/wrangler.toml
           echo "[env.production.vars]" >> ./apps/user/wrangler.toml
           cat .env >> ./apps/user/wrangler.toml
-          cat "NODE_ENV = \"production\"" >> ./apps/user/wrangler.toml
+          echo "NODE_ENV = \"production\"" >> ./apps/user/wrangler.toml
         shell: bash
         
       # 6. 프리 빌드
