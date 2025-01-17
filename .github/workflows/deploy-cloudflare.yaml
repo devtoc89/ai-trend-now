@@ -73,7 +73,7 @@ jobs:
           #   USER_DATABASE_URL
           #   USER_PULSE_API_KEY
           workingDirectory: ./apps/user/  # 빌드된 정적 파일이 저장된 디렉토리
-          command: pages deploy
+          command: pages deploy -e production
         # env:
           # NODE_ENV: production
           # USER_DATABASE_URL: ${{ secrets.USER_DATABASE_URL }}
