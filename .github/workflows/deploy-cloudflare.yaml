@@ -68,9 +68,9 @@ jobs:
       # 5. .env 파일 생성
       - name: add toml file
         run: |
-          echo "" >> ./apps/userwrangler.toml
-          echo "[env.production.vars]" >> ./apps/userwrangler.toml
-          cat .env >> ./apps/userwrangler.toml
+          echo "" >> ./apps/user/wrangler.toml
+          echo "[env.production.vars]" >> ./apps/user/wrangler.toml
+          cat .env >> ./apps/user/wrangler.toml
         shell: bash
         
       # 6. 프리 빌드
