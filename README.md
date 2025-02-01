@@ -70,6 +70,12 @@ pnpm --filter batch dev
 
 자세한 스크립트 설정은 turbo.json 참고
 
+# 특정 앱만 docker build
+sudo docker build -t manager .
+sudo docker build -t crawler .
+sudo docker build -t batch .
+
+
 ## 프로젝트 구조
 ```markdown
 .
