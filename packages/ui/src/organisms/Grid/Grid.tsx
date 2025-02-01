@@ -3,10 +3,10 @@
 import Spinner from "#organisms/Spinner/Spinner";
 import { type GetDotProp, getDotProp } from "@repo/util/property/object.util";
 import { cn } from "@repo/util/style/tailwind.util";
-import { debounce } from "es-toolkit";
+import { throttle } from "es-toolkit";
 import { type ReactNode, useEffect } from "react";
 import { useInView } from "react-intersection-observer";
-const eventDebouncer = debounce((callback) => callback(), 100);
+const eventThrottle = throttle((callback) => callback(), 200);
 // TODO: need refactoring
 
 function isCustomContent<T>(h: GridHeader<T> | CustomGridHeader): h is CustomGridHeader {
@@ -125,12 +125,12 @@ function renderContent<T extends ItemType>(item: T, header: GridHeader<T>, optio
 function Grid<T extends ItemType>({ items, options, nextPage, hasNext }: GridProps<T>) {
   const gridWidths = options.header.map((h) => h.width).join(" ");
   const [ref, InView] = useInView({
-    threshold: 0.5,
+    threshold: 0.1,
   });
 
   useEffect(() => {
     if (InView) {
-      nextPage && eventDebouncer(nextPage);
+      nextPage && eventThrottle(nextPage);
     }
   }, [nextPage, InView]);
 
