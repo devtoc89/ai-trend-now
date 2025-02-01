@@ -169,13 +169,13 @@ class _select {
 class _insert {}
 
 class _update {
-  public static autoStatus(tx: Prisma.TransactionClient, postId: string) {
+  public static autoStatus(tx: Prisma.TransactionClient, postId: string, autoFlg = true) {
     return tx.originalPostStatus.update({
       where: {
         postId,
       },
       data: {
-        autoFlg: true,
+        autoFlg,
         autoAt: getCurrentTimeISOString(),
       },
     });
