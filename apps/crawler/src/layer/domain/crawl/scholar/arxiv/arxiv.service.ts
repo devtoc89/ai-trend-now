@@ -1,8 +1,3 @@
-import { getUniqueItems } from "#layer/domain/crawl/common/common.services";
-import { fetchArxiv } from "#layer/domain/crawl/scholar/arxiv/arxiv.client";
-import { arxivClientResponseParser } from "#layer/domain/crawl/scholar/arxiv/arxiv.parser";
-import { serviceWrapper } from "#lib/helper/service/service.helper";
-import { getPrismaClient } from "#lib/instance/prisma/prisma.instance";
 import type {
   CrawlArxivParsedDTO,
   CrawlArxivParsedEntryDTO,
@@ -15,6 +10,11 @@ import type {
 } from "@repo/types/dto/crawl/common/common.crawl.dto";
 import type { ResponseTypeDTO } from "@repo/types/dto/response/response.dto";
 import { PostCategoryEnum } from "@repo/types/enums/post.category.enum";
+import { getUniqueItems } from "#layer/domain/crawl/common/common.services";
+import { fetchArxiv } from "#layer/domain/crawl/scholar/arxiv/arxiv.client";
+import { arxivClientResponseParser } from "#layer/domain/crawl/scholar/arxiv/arxiv.parser";
+import { serviceWrapper } from "#lib/helper/service/service.helper";
+import { getPrismaClient } from "#lib/instance/prisma/prisma.instance";
 
 const etcKey: Array<keyof CrawlArxivParsedEntryDTO> = ["author", "arxiv:primary_category", "arxiv:comment"];
 

@@ -9,9 +9,9 @@
     "#routes/*": ["./dist/src/routes/*.js"]
   },
   "scripts": {
-    "dev": "ts-node-dev -r tsconfig-paths/register src/app/index.ts -p 8000",
+    "dev": "ts-node-dev -r tsconfig-paths/register src/app/index.ts",
     "build": "rimraf dist && tsc -p tsconfig.json",
-    "start": "node dist/src/app/index.js -p 8000",
+    "start": "node dist/src/app/index.js",
     "test": "jest",
     "remove-build": "rimraf dist"
   },

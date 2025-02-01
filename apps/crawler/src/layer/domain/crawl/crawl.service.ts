@@ -1,9 +1,3 @@
-import { getAiNewsCrawlData } from "#layer/domain/crawl/news/ainews/ainews.service";
-import { getTechCrunchCrawlData } from "#layer/domain/crawl/news/techcrunch/techcrunch.service";
-import { getArxivCrawlData } from "#layer/domain/crawl/scholar/arxiv/arxiv.service";
-import { crawlComplete, handleCrawlError } from "#lib/helper/crawler/crawler.helper";
-import { serviceWrapper } from "#lib/helper/service/service.helper";
-import { getPrismaClient } from "#lib/instance/prisma/prisma.instance";
 import { createId } from "@paralleldrive/cuid2";
 import type { PrismaClient } from "@prisma/client/manager/index.js";
 import type {
@@ -16,6 +10,12 @@ import type { ResponseTypeDTO } from "@repo/types/dto/response/response.dto";
 import { CrawlStatusEnum } from "@repo/types/enums/crawl.status.enum";
 import { getCurrentTimeISOString } from "@repo/util/date/date.util";
 import { isKeyOf } from "@repo/util/property/object.util";
+import { getAiNewsCrawlData } from "#layer/domain/crawl/news/ainews/ainews.service";
+import { getTechCrunchCrawlData } from "#layer/domain/crawl/news/techcrunch/techcrunch.service";
+import { getArxivCrawlData } from "#layer/domain/crawl/scholar/arxiv/arxiv.service";
+import { crawlComplete, handleCrawlError } from "#lib/helper/crawler/crawler.helper";
+import { serviceWrapper } from "#lib/helper/service/service.helper";
+import { getPrismaClient } from "#lib/instance/prisma/prisma.instance";
 
 async function createManyOriginalPostWithSource(
   prisma: PrismaClient,
@@ -144,6 +144,6 @@ export async function crawlAndPersist(searchParam: CrawlCommonParamsDTO): Promis
       if (!res.success) throw new Error(res.error);
       return res.data;
     }
-    return "source is not required";
+    return "the source in params is invalid.";
   });
 }
