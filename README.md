@@ -63,10 +63,10 @@ pnpm install
 pnpm dev
 
 # 특정 앱만 실행
-pnpm --filter user dev
-pnpm --filter manager dev
-pnpm --filter crawler dev
-pnpm --filter batch dev
+pnpm --filter user dev  
+pnpm --filter manager dev  
+pnpm --filter crawler dev  
+pnpm --filter batch dev  
 
 자세한 스크립트 설정은 turbo.json 참고
 
