@@ -1,8 +1,10 @@
 # AI Trend now public
+AI 관련 뉴스와 논문을 수집, 가공하여 제공하는 모노레포 기반의 통합 플랫폼입니다.  
+해당 레포지토리는 일부 코드 공개용으로 전체 소스는 아닙니다.  
+일부 작업의 참조만 부탁드립니다.  
 
-AI 관련 뉴스와 논문을 수집, 가공하여 제공하는 모노레포 기반의 통합 플랫폼입니다.
-해당 레포지토리는 일부 코드 공개용으로 전체 소스는 아닙니다.
-일부 작업의 참조만 부탁드립니다.
+### 아래의 도메인을 통해 서비스를 사용하실 수 있습니다.
+[AI 논문 요약 서비스](https://ai-trend-now.stream)
 
 ## 주요 기능
 - AI 관련 컨텐츠 자동 수집 및 가공
@@ -61,12 +63,18 @@ pnpm install
 pnpm dev
 
 # 특정 앱만 실행
-pnpm --filter user dev
-pnpm --filter manager dev
-pnpm --filter crawler dev
-pnpm --filter batch dev
+pnpm --filter user dev  
+pnpm --filter manager dev  
+pnpm --filter crawler dev  
+pnpm --filter batch dev  
 
 자세한 스크립트 설정은 turbo.json 참고
+
+# 특정 앱만 docker build
+sudo docker build -t manager .
+sudo docker build -t crawler .
+sudo docker build -t batch .
+
 
 ## 프로젝트 구조
 ```markdown
