@@ -21,6 +21,7 @@ export async function generateMetadata({
   params: Promise<{ page: string }>;
 }): Promise<Metadata> {
   const pageNum = Number.parseInt((await params).page ?? 0);
+
   return await generatePagePostListMetadata({
     postListFetcher: async () =>
       Number.isNaN(pageNum)
@@ -28,4 +29,5 @@ export async function generateMetadata({
         : (await getPostListAndCountActionCache(PostCategoryEnum.PAPER, pageNum - 1, NEWS_PAGE_SIZE)).list,
   });
 }
+
 export default page;

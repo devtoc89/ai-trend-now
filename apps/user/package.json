@@ -4,18 +4,13 @@
   "private": true,
   "imports": {
     "#*": {
-      "import": [
-        "./src/*",
-        "./src/*.ts",
-        "./src/*.tsx"
-      ]
+      "import": ["./src/*", "./src/*.ts", "./src/*.tsx"]
     }
   },
   "scripts": {
-    "vercel-build": "next build",
     "dev": "next dev --turbopack -p 3331",
     "debug": "cross-env NODE_OPTIONS='--inspect' next dev",
-    "build-edge": "next build",
+    "build": "next build",
     "build-analyze": "ANALYZE=true next build",
     "start": "next start -p 3331",
     "lint": "next lint",

@@ -11,17 +11,15 @@ export async function generatePagePostMetadata({
 }): Promise<Metadata> {
   const post = await postFetcher();
 
-  const title = post?.title ? `${post.title} (${GLOBAL_TITLE})` : GLOBAL_TITLE;
-  const description = post?.summary
-    ? `${`${post.summary.substring(0, DESCRIPTION_MAX_LENGTH)}...`} (${GLOBAL_TITLE})`
-    : GLOBAL_TITLE;
+  const title = post?.title ? `${post.title}` : GLOBAL_TITLE;
+  const description = post?.summary ? `${`${post.summary.substring(0, DESCRIPTION_MAX_LENGTH)}...`}` : GLOBAL_TITLE;
   const keywords = (post?.metadata?.keywords || ["ai"]).join(",");
 
   return {
     ...commonMetadata({ title, description, keywords }),
   };
 }
-const DESCRIPTION_LIST_MAX_LENGTH = 30;
+const DESCRIPTION_LIST_MAX_LENGTH = 50;
 
 export async function generatePagePostListMetadata({
   postListFetcher,
@@ -35,17 +33,16 @@ export async function generatePagePostListMetadata({
     (postList ?? []).map((v) => `${v.summary.substring(0, DESCRIPTION_LIST_MAX_LENGTH)}...`).join("|") ?? GLOBAL_TITLE;
   const keywords =
     (postList ?? []).map((v) => v.title.replace(/^#\s*/, "").split(" ").slice(0, 2).join(" ")).join(", ") ?? "ai";
-
   return {
     ...commonMetadata({ title, description, keywords }),
   };
 }
 
-export async function commonMetadata({
+export function commonMetadata({
   title,
   description,
   keywords,
-}: { title: string; description: string; keywords: string }): Promise<Metadata> {
+}: { title: string; description: string; keywords: string }): Metadata {
   return {
     metadataBase: new URL("https://ai-trend-now.stream/post/paper"),
     title,
