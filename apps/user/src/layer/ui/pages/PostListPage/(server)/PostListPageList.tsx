@@ -1,11 +1,11 @@
 "use server";
 
-import type { PostListViewList } from "#layer/action/post.action";
-import TimeAgo from "#layer/ui/components/common/(client)/TimeAgo/TimeAgo";
-import Markdown from "#layer/ui/components/common/(server)/Markdown/Markdown";
 import Image from "next/image";
 import Link from "next/link";
 import NoImageSrc from "public/no_image.webp";
+import type { PostListViewList } from "#layer/action/post.action";
+import TimeAgo from "#layer/ui/components/common/(client)/TimeAgo/TimeAgo";
+import Markdown from "#layer/ui/components/common/(server)/Markdown/Markdown";
 
 function PostListPageList({ list, urlPath }: { list: PostListViewList[]; urlPath: string }) {
   return (
@@ -16,7 +16,7 @@ function PostListPageList({ list, urlPath }: { list: PostListViewList[]; urlPath
           href={`${urlPath}${post.id}`}
           className="border border-gray-200 rounded-md whitespace-pre-wrap w-full shadow-lg overflow-hidden dark:bg-slate-800 dark:border-gray-700 dark:text-white"
         >
-          <div className="flex flex-col md:flex-row md:h-[13rem]">
+          <div className="flex flex-col md:flex-row md:h-[12.5rem]">
             <div className="md:w-[13rem] flex justify-center items-center">
               <Image
                 src={NoImageSrc}
