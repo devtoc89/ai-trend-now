@@ -81,5 +81,6 @@ export function commonMetadata({
       description,
       images: ["https://ai-trend-now.stream/no_image.webp"],
     }, // Twitter 카드 데이터 추가
+    other: { "naver-site-verification": "42a518cfb595016582aeac995ce784408f627c0f" },
   };
 }

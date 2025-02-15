@@ -1,6 +1,15 @@
-import FontPretendard from "#app/fonts/FontPretendard";
 import { cn } from "@repo/util/style/tailwind.util";
+import type { Metadata } from "next/types";
 import type React from "react";
+import FontPretendard from "#app/fonts/FontPretendard";
+import { GLOBAL_DESCRIPTION, GLOBAL_TITLE } from "#consts/global";
+import { commonMetadata } from "#lib/helper/metadata/metadata.helper";
+
+export const metadata: Metadata = commonMetadata({
+  title: GLOBAL_TITLE,
+  description: GLOBAL_DESCRIPTION,
+  keywords: "AI, AI논문",
+});
 
 function RootLayer({
   className,
