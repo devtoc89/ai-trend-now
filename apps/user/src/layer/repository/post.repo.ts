@@ -9,7 +9,7 @@ export type RetrievePostList = Array<
 >;
 
 class _select {
-  public static ids(tx: UserPrisma.TransactionClient, category: PostCategoryEnum, pageSize = 2000) {
+  public static ids(tx: UserPrisma.TransactionClient, category: PostCategoryEnum, pageSize = 400) {
     return tx.postBase.findMany({
       take: pageSize,
       orderBy: {
