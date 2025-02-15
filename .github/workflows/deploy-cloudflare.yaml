@@ -20,41 +20,26 @@ jobs:
       # 2.1 pnpm
       - name: Restore pnpm cache
         id: cache-pnpm-restore
-        uses: actions/cache@v4
+        uses: actions/cache/restore@v4
         with:
           path: ~/.pnpm-store
           key: pnpm-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
-
-      # # 2.2 next
-      # - name: Restore next cache
-      #   id: cache-next-restore
-      #   uses: actions/cache@v4
-      #   with:
-      #     path: ./apps/user/.next
-      #     key: next-${{ runner.os }}
-          
-      # # 2.3 vercel
-      # - name: Restore vercel cache
-      #   id: cache-vercel-restore
-      #   uses: actions/cache@v4
-      #   with:
-      #     path: ./apps/user/.vercel
-      #     key: vercel-${{ runner.os }}
+          restore-keys: |
+            pnpm-${{ runner.os }}-
 
       # 3. pnpm 설치
       - name: Setup pnpm
         run: |
           npm install -g pnpm@9.15.4
           pnpm config set store-dir ~/.pnpm-store
-          
+
       # 8. 캐싱
-      # 8.1 pnpm
+      # 8.1 pnpm (변경된 경우에만 저장)
       - name: Save pnpm cache
-        id: cache-pnpm-save
+        if: steps.cache-pnpm-restore.outputs.cache-hit != 'true' # 캐시가 없을 때만 저장
         uses: actions/cache/save@v4
         with:
-          path: |
-            ~/.pnpm-store
+          path: ~/.pnpm-store
           key: pnpm-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
           
       # 4. 의존성 설치
