@@ -14,6 +14,7 @@ import {
 export type PostListViewList = Omit<AiContentExt, "isError" | "content" | "metadata"> & {
   id: string;
   createdAt: string;
+  metadata?: AiContentMeta;
 };
 
 export type PostItemViewItem = Omit<AiContentExt, "isError"> & {
@@ -45,6 +46,7 @@ function postListToViewList(post: RetrievePostItem): PostListViewList {
     id: post.id,
     title: post.postDetail?.title || "",
     summary: post.postDetail?.summary || "",
+    metadata: post.postMeta?.metadata as AiContentMeta | undefined,
     createdAt: post.createdAt.toISOString(),
   };
 }

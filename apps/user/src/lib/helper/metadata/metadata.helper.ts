@@ -19,7 +19,7 @@ export async function generatePagePostMetadata({
     ...commonMetadata({ title, description, keywords }),
   };
 }
-const DESCRIPTION_LIST_MAX_LENGTH = 50;
+const DESCRIPTION_LIST_MAX_LENGTH = 10;
 
 export async function generatePagePostListMetadata({
   postListFetcher,
@@ -30,9 +30,13 @@ export async function generatePagePostListMetadata({
 
   const title = ARTICLE_LIST_PAGE_TITLE;
   const description =
-    (postList ?? []).map((v) => `${v.summary.substring(0, DESCRIPTION_LIST_MAX_LENGTH)}...`).join("|") ?? GLOBAL_TITLE;
+    (postList ?? [])
+      .map((v) => `${v.metadata?.insights?.[0]?.substring(0, DESCRIPTION_LIST_MAX_LENGTH)}...`)
+      .join("|") ?? GLOBAL_TITLE;
+
   const keywords =
     (postList ?? []).map((v) => v.title.replace(/^#\s*/, "").split(" ").slice(0, 2).join(" ")).join(", ") ?? "ai";
+
   return {
     ...commonMetadata({ title, description, keywords }),
   };
