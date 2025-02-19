@@ -39,8 +39,8 @@
   },
   "devDependencies": {
     "@biomejs/biome": "catalog:",
-    "@cloudflare/next-on-pages": "1",
-    "@cloudflare/workers-types": "^4.20241205.0",
+    "@cloudflare/next-on-pages": "^1.13.7",
+    "@cloudflare/workers-types": "^4.20250214.0",
     "@next/bundle-analyzer": "^15.1.1",
     "@repo/tailwind-config": "workspace:*",
     "@repo/types": "workspace:*",
@@ -58,6 +58,7 @@
     "tailwindcss": "catalog:",
     "tailwindcss-textshadow": "^2.1.3",
     "typescript": "catalog:",
-    "wrangler": "3.90.0"
+    "wrangler": "^3.109.2",
+    "schema-dts": "^1.1.2"
   }
 }
