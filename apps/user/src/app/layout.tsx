@@ -8,9 +8,9 @@ import "react-toastify/dist/ReactToastify.css";
 
 import type { Metadata } from "next/types";
 import { ARTICLE_LIST_PAGE_TITLE, GLOBAL_DESCRIPTION } from "#consts/global";
-import { commonMetadata } from "#lib/helper/metadata/metadata.helper";
+import { generateCommonMetadata } from "#lib/helper/seo/metadata.helper";
 
-export const metadata: Metadata = commonMetadata({
+export const metadata: Metadata = generateCommonMetadata({
   title: ARTICLE_LIST_PAGE_TITLE,
   description: GLOBAL_DESCRIPTION,
   keywords: ["AI 논문 요약"].join(", "),
