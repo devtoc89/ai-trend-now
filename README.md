@@ -48,9 +48,12 @@ Cloudflare Pages(edge 환경 배포)를 직접 검토해보고, LLM을 활용한
 - **DB**: PostgreSQL, Redis
 - **ORM**: Prisma
 - **AI**: LangChain, LangSmith, Google Gemini
+- **인증**: AWS Cognito
+- **크롤링**: axios, cheerio
 - **스타일링**: Tailwind CSS, Shadcn UI
 - **패키지 관리**: pnpm workspace
 - **빌드 도구**: Turborepo
+- **CI/CD**: GitHub Actions (AWS ECS / Cloudflare Pages 배포)
 - **테스트**: Jest
 - **로깅**: Pino
 
