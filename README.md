@@ -6,6 +6,8 @@ AI 관련 뉴스와 논문을 수집, 가공하여 제공하는 모노레포 기
 ### 아래의 도메인을 통해 서비스를 사용하실 수 있습니다.
 [AI 논문 요약 서비스](https://ai-trend-now.stream)
 
+![서비스 화면](docs/screenshot.png)
+
 ## 프로젝트 목적
 Cloudflare Pages(edge 환경 배포)를 직접 검토해보고, LLM을 활용한 서비스를 구축해보기 위해 시작한 개인 프로젝트입니다.
 
