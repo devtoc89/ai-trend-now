@@ -66,6 +66,8 @@ Cloudflare Pages(edge 환경 배포)를 직접 검토해보고, LLM을 활용한
 - Redis
 
 ### 설치
+
+```bash
 # 의존성 설치
 pnpm install
 
@@ -73,18 +75,20 @@ pnpm install
 pnpm dev
 
 # 특정 앱만 실행
-pnpm --filter user dev  
-pnpm --filter manager dev  
-pnpm --filter crawler dev  
-pnpm --filter batch dev  
+pnpm --filter user dev
+pnpm --filter manager dev
+pnpm --filter crawler dev
+pnpm --filter batch dev
+```
 
 자세한 스크립트 설정은 turbo.json 참고
 
+```bash
 # 특정 앱만 docker build
 sudo docker build -t manager .
 sudo docker build -t crawler .
 sudo docker build -t batch .
-
+```
 
 ## 프로젝트 구조
 ```markdown
